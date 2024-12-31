@@ -8,7 +8,7 @@
         "Other"
     ],
     "activationEvents": [
-        "*"
+        "onStartupFinished"
     ],
     "main": "./main.js",
     "contributes": {

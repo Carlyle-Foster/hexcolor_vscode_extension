@@ -19,7 +19,6 @@ function provideDocumentColors(document, _token) {
     return [...text.matchAll(regex)].map( (match) => {
         const start = getPosition(text, match.index);
         const end = getPosition(text, match.index + match[0].length);
-        console.log(match[0].length)
         
         const range = new vsc.Range(start, end);
         const color = readHexColor(match[0]);
@@ -29,10 +28,8 @@ function provideDocumentColors(document, _token) {
 }
 
 function provideColorPresentations(color, _context, _token) {
-    try {
-    const hex_color = writeHexColor(color)
+    const hex_color = writeHexColor(color);
     return [ new vsc.ColorPresentation(hex_color) ];
-    } catch (e) { console.error(e) }
 }
 
 function readHexColor(hexstring) {
