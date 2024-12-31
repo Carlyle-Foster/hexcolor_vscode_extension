@@ -1,0 +1,25 @@
+{
+    "name": "hexcolor",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./main.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "hexcolor.test",
+                "title": "hexcolor_test"
+            }
+        ]
+    },
+    "capabilities": {
+		"colorProvider": "true"
+	}
+}
