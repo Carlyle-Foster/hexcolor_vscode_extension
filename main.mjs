@@ -1,15 +1,14 @@
-const vsc = require('vscode');
+import * as vsc from 'vscode';
 
-exports.activate = function(context) {
+export function activate(_context) {
     for (const language of ['sql']) {
-        let handle = vsc.languages.registerColorProvider(
+        vsc.languages.registerColorProvider(
             { language }, 
             {
                 provideDocumentColors,
                 provideColorPresentations,
             }
         ); 
-        context.subscriptions.push(handle);
     }
 }
 
