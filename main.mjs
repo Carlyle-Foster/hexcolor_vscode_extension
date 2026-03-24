@@ -1,5 +1,7 @@
 import * as vsc from 'vscode';
 
+const COLOR_REGEX = /0x[0-9a-f]{6}[0-9a-f]{2}?/g;
+
 export function activate(_context) {
     for (const language of ['sql']) {
         vsc.languages.registerColorProvider(
@@ -13,11 +15,11 @@ export function activate(_context) {
 }
 
 function provideDocumentColors(document, _token) {
-    const text = document.getText();
-    const regex = /0x[0-9a-f]{6}[0-9a-f]{2}?/g;
-    return [...text.matchAll(regex)].map( (match) => {
-        const start = getPosition(text, match.index);
-        const end = getPosition(text, match.index + match[0].length);
+    COLOR_REGEX.lastIndex = 0;
+    
+    return document.getText().matchAll(COLOR_REGEX).map( (match) => {
+        const start = document.positionAt(match.index);
+        const end   = document.positionAt(match.index + match[0].length);
         
         const range = new vsc.Range(start, end);
         const color = readHexColor(match[0]);
@@ -51,13 +53,4 @@ function writeHexColor(color) {
         throw new Error("failed to parse chosen color");
     }
     return string
-}
-function getPosition(text, index) {
-    const lines = [...text.slice(0, index).matchAll(/\n/g)];
-    const line_number = lines.length;
-    const character_index = (line_number > 0) ? index - (lines[line_number-1].index + 1) : index;
-    return new vsc.Position(
-        line_number,
-        character_index
-    );
 }
